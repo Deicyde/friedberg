@@ -1,3 +1,6 @@
+pub mod vector_space;
+pub mod field;
+
 #[cfg(test)]
 mod tests {
     #[test]
