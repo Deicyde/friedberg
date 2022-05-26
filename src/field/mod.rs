@@ -2,7 +2,7 @@ mod real;
 mod complex;
 pub use real::Real;
 
-use std::ops::{Add, Sub, Mul, Div, AddAssign, MulAssign};
+use std::ops::{Add, Sub, Mul, Div, AddAssign, MulAssign, DivAssign, SubAssign};
 
 /// A trait for numeric types that satisfy the property of being a field.
 /// Addition must be commutative, associative, and have identity 0.
@@ -16,6 +16,9 @@ pub trait Field: Sized
     + Div<Output=Self>
     + AddAssign
     + MulAssign
+    + DivAssign
+    + SubAssign
+    + PartialEq
     + Copy
     +'static {
     /// Returns the multiplicative identity

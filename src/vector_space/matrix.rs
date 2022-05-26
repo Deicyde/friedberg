@@ -1,7 +1,9 @@
 use crate::field::Field;
 use super::VectorSpace;
-use std::ops::{Add, Mul, Index, IndexMut};
+use std::ops::{Add, Mul, Sub, Div, Index, IndexMut};
 
+/// A type representing a fixed-size matrix over a given field.
+#[derive(Clone, Copy, PartialEq)]
 pub struct Matrix<F: Field, const M: usize, const N: usize>([[F;N];M]);
 
 impl<F: Field, const M: usize, const N: usize> From<[[F;N];M]> for Matrix<F, M, N> {
@@ -35,12 +37,36 @@ impl<F: Field, const M: usize, const N: usize> Add<&Self> for Matrix<F, M, N> {
     }
 }
 
+impl<F: Field, const M: usize, const N: usize> Sub<&Self> for Matrix<F, M, N> {
+    type Output = Self;
+    fn sub(mut self, rhs: &Self) -> Self {
+        for i in 0..M {
+            for j in 0..N {
+                self[(i,j)] -= rhs[(i,j)]
+            }
+        }
+        self
+    }
+}
+
 impl<F: Field, const M: usize, const N: usize> Mul<F> for Matrix<F, M, N> {
     type Output = Self;
     fn mul(mut self, rhs: F) -> Self {
         for i in 0..M {
             for j in 0..N {
-                self[(i,j)] += rhs;
+                self[(i,j)] *= rhs;
+            }
+        }
+        self
+    }
+}
+
+impl<F: Field, const M: usize, const N: usize> Div<F> for Matrix<F, M, N> {
+    type Output = Self;
+    fn div(mut self, rhs: F) -> Self {
+        for i in 0..M {
+            for j in 0..N {
+                self[(i,j)] /= rhs;
             }
         }
         self

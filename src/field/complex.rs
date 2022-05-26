@@ -1,7 +1,7 @@
 use std::ops::{Add, Sub, Mul, Div};
 use super::Real;
 
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, PartialEq)]
 struct Complex {
     pub re: Real, // The real component
     pub im: Real // The imaginary component
