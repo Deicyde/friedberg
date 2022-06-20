@@ -1,5 +1,6 @@
 pub mod vector_space;
 pub mod field;
+pub mod geometry;
 
 #[cfg(test)]
 mod tests {

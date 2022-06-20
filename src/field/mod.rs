@@ -1,8 +1,13 @@
-mod real;
-mod complex;
+pub mod real;
 pub use real::Real;
+pub mod complex;
+pub use complex::Complex;
+pub mod rational;
+pub use rational::{Int, Rational};
+mod int_mod_2;
 
-use std::ops::{Add, Sub, Mul, Div, AddAssign, MulAssign, DivAssign, SubAssign};
+use std::ops::{Add, Sub, Mul, Div, AddAssign, MulAssign, DivAssign, SubAssign, Neg};
+use std::fmt::{Debug, Display};
 
 /// A trait for numeric types that satisfy the property of being a field.
 /// Addition must be commutative, associative, and have identity 0.
@@ -10,6 +15,7 @@ use std::ops::{Add, Sub, Mul, Div, AddAssign, MulAssign, DivAssign, SubAssign};
 /// Additive and multiplicative inverses must be defined for all non-zero elements.
 /// Addition and multiplication must obey the distributive law.
 pub trait Field: Sized
+    + Neg<Output=Self>
     + Add<Output=Self>
     + Sub<Output=Self> 
     + Mul<Output=Self> 
@@ -20,6 +26,8 @@ pub trait Field: Sized
     + SubAssign
     + PartialEq
     + Copy
+    + Debug
+    + Display
     +'static {
     /// Returns the multiplicative identity
     fn one() -> Self;
@@ -36,4 +44,3 @@ pub trait Field: Sized
         Self::zero() - x
     }
 }
-
